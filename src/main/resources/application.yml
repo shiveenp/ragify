@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: ragify
+  profiles:
+    active: local
+
+  ai:
+    ollama:
+      chat:
+        options:
+          model: llama3.2
+      embedding:
+        model: nomic-embed-text # We use a separate model for embedding to stay within pgVectors dimensionality
+        enabled: true
+      init:
+        pull-model-strategy: never # We need to ensure our local contaiers have the right model on start
+      base-url: http://localhost:11434
+
+    vectorstore:
+      pgvector:
+        schema-validation: on
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ragify
+    username: ragify_admin
+    password: ragify_db_secret
+    driver-class-name: org.postgresql.Driver
+
+#  flyway:
+#    url: jdbc:postgresql://localhost:5432/ragify
+#    user: ragify_admin
+#    password: ragify_secret
+
+
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+logging:
+  level:
+    io.shiveenp: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    io.shiveenp: info

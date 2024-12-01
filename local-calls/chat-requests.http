@@ -1,0 +1,8 @@
+### Get some chat output
+POST http://localhost:8080/v1/chat/question
+Content-Type: application/json
+
+{
+  "prompt": ""
+}
+
