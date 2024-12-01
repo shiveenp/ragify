@@ -29,14 +29,6 @@ spring:
     password: ragify_db_secret
     driver-class-name: org.postgresql.Driver
 
-#  flyway:
-#    url: jdbc:postgresql://localhost:5432/ragify
-#    user: ragify_admin
-#    password: ragify_secret
-
-
-
-
 ---
 spring:
   config:
