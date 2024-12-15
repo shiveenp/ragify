@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.nio.file.Paths
 
 @RestController
-@RequestMapping("/v1/document")
-class DocumentController(
+@RequestMapping("/v1/index")
+class IndexingController(
     private val documentService: DocumentService
 ) {
-
-    @PostMapping("/ingest")
-    fun ingestDocuments(@RequestBody documentIngestionRequestDto: DocumentIngestionRequestDto): ResponseEntity<Nothing> {
-        documentService.ingest(documentIngestionRequestDto.paths.first())
+    @PostMapping("/documents")
+    fun index(@RequestBody documentIngestionRequestDto: DocumentIngestionRequestDto): ResponseEntity<Nothing> {
+        documentService.ingest(documentIngestionRequestDto.folderPath.let { Paths.get(it) })
         return ResponseEntity.ok().build()
     }
 }

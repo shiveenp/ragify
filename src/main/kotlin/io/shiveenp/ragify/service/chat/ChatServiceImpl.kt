@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service
 @Service
 class ChatServiceImpl(
     chatClientBuilder: ChatClient.Builder,
-    private val documentService: DocumentService,
     vectorStore: VectorStore,
 ) : ChatService {
 
@@ -19,7 +18,6 @@ class ChatServiceImpl(
         .build()
 
     override fun answerPrompt(prompt: String): ChatResponse {
-        documentService.ingest("classpath:/docs/shiveens-family.pdf")
         return ChatResponse(
             answer = chatClient
                 .prompt()

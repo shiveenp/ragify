@@ -1,0 +1,7 @@
+### Index a folder
+POST http://localhost:8080/v1/index/documents
+Content-Type: application/json
+
+{
+  "folderPath": "/Users/shiveenpandita/Documents/Finances"
+}

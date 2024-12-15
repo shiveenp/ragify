@@ -6,6 +6,7 @@ import org.springframework.ai.transformer.splitter.TextSplitter
 import org.springframework.ai.transformer.splitter.TokenTextSplitter
 import org.springframework.ai.vectorstore.VectorStore
 import org.springframework.stereotype.Service
+import java.nio.file.Path
 
 @Service
 class DocumentServiceImpl(
@@ -15,12 +16,12 @@ class DocumentServiceImpl(
 
     private val textSplitter: TextSplitter = TokenTextSplitter()
 
-    override fun ingest(filePath: String) {
-        logger.debug("Initializing vector store with pdf file at: $filePath")
-        val pdfReader = TikaDocumentReader(filePath)
+    override fun ingest(filePath: Path) {
+        logger.debug("Initializing vector store with pdf file at: {}", filePath)
+        val pdfReader = TikaDocumentReader(filePath.toString())
         vectorStore.apply {
             accept(textSplitter.apply(pdfReader.get()))
         }
-        logger.debug("Initialized vector store with pdf file at: $filePath")
+        logger.debug("Initialized vector store with pdf file at: {}", filePath)
     }
 }
